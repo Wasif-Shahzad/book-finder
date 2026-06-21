@@ -170,7 +170,7 @@ function SearchResult({ queryResult }: SearchResultProps) {
 
 export default function App() {
   const [book, setBook] = useState('');
-  const [response, setResponse] = useState<Book[] | null>(null);
+  const [response, setResponse] = useState<Book[] | "Internal Server Error" | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const apiKey: string = import.meta.env.VITE_BOOKS_API_KEY;
 
@@ -179,10 +179,17 @@ export default function App() {
     const trimmed: string = book.trim();
     const query_string: string = trimmed.replaceAll(' ', '+');
     const url: string = 'https://www.googleapis.com/books/v1/volumes?q=' + query_string + '&key=' + apiKey;
-    const res = await axios.get<BooksResponse>(url);
-    setLoading(false);
-    console.log(res.data.items);
-    setResponse(res.data.items);
+    try {
+      const res = await axios.get<BooksResponse>(url);
+      if (res.status !== 200) {
+        throw new Error("Internal Server Error");
+      }
+      setResponse(res.data.items);
+    } catch {
+      setResponse("Internal Server Error" as const);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -190,9 +197,9 @@ export default function App() {
       <h1>Book Finder</h1>
       <SearchBox setBook={setBook} queryBooks={queryBooks} />
       <div className="search-result-outer-container">
-        {!response ? null : (
-          loading ? <TrophySpin color="#000000" size="small" text="" textColor="" /> :
-            <SearchResult queryResult={response} />
+        {loading ? <TrophySpin color="#000000" size="small" text="" textColor="" /> : (
+            response === "Internal Server Error" ? response
+              : <SearchResult queryResult={response} />
         )}
       </div>
     </>
