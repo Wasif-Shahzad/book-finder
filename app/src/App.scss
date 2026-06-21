@@ -1,0 +1,149 @@
+@import url('https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital,wght@0,400;0,700;1,400;1,700&family=Cuprum:ital,wght@0,400..700;1,400..700&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=PT+Sans+Narrow:wght@400;700&display=swap');
+
+$primary-bg: #eee;
+$blue: #0061eb;
+
+#root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+body {
+  background-color: $primary-bg;
+  font-family: 'Open Sans', sans-serif;
+
+  h1 {
+    color: $blue;
+    font-family: 'Anonymous Pro', sans-serif;
+    text-align: center;
+    margin-bottom: 0;
+  }
+
+  .search-box-container {
+    width: 430px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+
+    .search-box-form {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      height: 3rem;
+      max-width: 500px;
+      background-color: white;
+      border-radius: 1rem;
+      overflow: hidden;
+      border: 1px solid #ccc;
+      box-shadow: 0 0 0 0 transparent;
+      transition: box-shadow 200ms ease-in-out;
+
+      &:focus-within {
+        box-shadow: 0 0 0 2px $blue;
+      }
+
+      .search-box {
+        width: 75%;
+        border: none;
+        height: 100%;
+        background: transparent;
+        padding-left: 1rem;
+        font-family: inherit;
+      }
+
+      .search-button {
+        width: 25%;
+        height: 100%;
+        background-color: $blue;
+        border: none;
+        font-family: inherit;
+        color: white;
+        font-size: 1rem;
+        cursor: pointer;
+
+        &:hover {
+          background-color: darken($blue, 5%);
+        }
+      }
+    }
+  }
+
+  .search-result-outer-container {
+    width: 100%;
+    padding: 0 5rem;
+    box-sizing: border-box;
+    margin-bottom: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .search-result-inner-container {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
+
+      .book-card {
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 420px;
+        padding: 2rem 1rem;
+        box-sizing: border-box;
+        border-radius: 1rem;
+        transition: box-shadow 200ms ease-in-out;
+        cursor: pointer;
+
+        &:hover {
+          box-shadow: 0 0 20px 5px #a69f9f;
+        }
+
+        .book-card-thumbnail {
+          align-self: center;
+          height: 200px;
+          margin-bottom: 1rem;
+        }
+
+        h3 {
+          margin-bottom: 0.2rem;
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          text-align: center;
+          font-family: 'Anonymous Pro', serif;
+        }
+
+        button {
+          margin-top: auto;
+          height: 2.5rem;
+          width: 10rem;
+          font-family: 'Open sans', serif;
+          background-color: $blue;
+          color: white;
+          border: 0;
+          border-radius: 0.5rem;
+          cursor: pointer;
+          transition: background-color 200ms ease-in-out;
+
+          &:hover {
+            background-color: darken($blue, 10%);
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 500px) {
+  .search-box-container {
+    width: 350px;
+  }
+}
